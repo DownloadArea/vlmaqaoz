@@ -104,9 +104,18 @@ def load_seed_bundle(seed_dir: Path) -> SeedBundle:
         orgs[org.id] = org
         for key in raw.get("api_keys", []):
             api_keys[str(key)] = org.id
-    floods_typed: dict[str, dict[str, float]] = {
-        k: {kk: float(vv) for kk, vv in v.items()} for k, v in floods.items()
-    }
+    floods_typed: dict[str, dict[str, float]] = {}
+    for hex_id, payload in floods.items():
+        if not isinstance(payload, dict):
+            continue
+        numeric: dict[str, float] = {}
+        for kk, vv in payload.items():
+            try:
+                numeric[kk] = float(vv)
+            except (TypeError, ValueError):
+                # Skip non-numeric fields like a textual `note` annotation.
+                continue
+        floods_typed[hex_id] = numeric
     demographics = {str(k): int(v) for k, v in demo_raw.items()}
     return SeedBundle(
         nodes=nodes,
@@ -182,7 +191,7 @@ class AppState:
         self.eta_model = self._train_eta_model()
         self.flood_detector = self._train_flood_detector(flood_by_hex)
         self.eco_model = EcoModel()
-        self.kanon_guard = KAnonGuard(threshold=50)
+        self.kanon_guard = KAnonGuard(min_k=50, source="api-gateway")
 
         self.signing_key = Ed25519PrivateKey.generate()
         self.public_key_pem = (

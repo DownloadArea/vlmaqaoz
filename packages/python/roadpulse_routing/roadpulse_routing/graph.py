@@ -8,8 +8,9 @@ query time so we can update them every five minutes without rebuilding the graph
 
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass, field
-from typing import Iterable
+from typing import Any
 
 from roadpulse_core.geo import Coordinate, haversine_m
 
@@ -21,6 +22,7 @@ class Node:
     id: int
     lng: float
     lat: float
+    district: str | None = None
 
     def as_coordinate(self) -> Coordinate:
         return Coordinate(lng=self.lng, lat=self.lat)
@@ -98,12 +100,13 @@ class Graph:
     # --- access -----------------------------------------------------------------------
 
     @property
-    def nodes(self) -> Iterable[Node]:
-        return self._nodes.values()
+    def nodes(self) -> Mapping[int, Node]:
+        """Return the underlying ``{node_id: Node}`` mapping (read-only view)."""
+        return self._nodes
 
     @property
-    def edges(self) -> Iterable[Edge]:
-        return iter(self._edges)
+    def edges(self) -> Sequence[Edge]:
+        return self._edges
 
     def node(self, node_id: int) -> Node:
         return self._nodes[node_id]
@@ -120,21 +123,38 @@ class Graph:
 
     # --- convenience helpers ----------------------------------------------------------
 
-    def nearest_node(self, point: Coordinate, max_distance_m: float = 5_000.0) -> int:
-        """Brute-force nearest-node lookup. Good enough for ≤ 100K nodes in tests.
+    def nearest_node(
+        self,
+        lng_or_point: float | Coordinate | Any,
+        lat: float | None = None,
+        *,
+        max_distance_m: float = 5_000.0,
+    ) -> Node:
+        """Brute-force nearest-node lookup.
 
+        Accepts either ``(lng, lat)`` floats or a single object exposing ``.lng/.lat``
+        attributes (such as :class:`Coordinate` or :class:`roadpulse_core.types.LatLon`).
         Production code uses an STR-tree built once at startup; that lives in the
         ``routing-engine`` app which depends on this package.
         """
-        best_id = -1
+        if lat is None:
+            point_lng = float(getattr(lng_or_point, "lng"))
+            point_lat = float(getattr(lng_or_point, "lat"))
+        else:
+            point_lng = float(lng_or_point)
+            point_lat = float(lat)
+        if not self._nodes:
+            raise LookupError("graph has no nodes")
+        target = Coordinate(lng=point_lng, lat=point_lat)
+        best_node: Node | None = None
         best_d = float("inf")
         for node in self._nodes.values():
-            d = haversine_m(point, node.as_coordinate())
+            d = haversine_m(target, node.as_coordinate())
             if d < best_d:
                 best_d = d
-                best_id = node.id
-        if best_d > max_distance_m:
+                best_node = node
+        if best_node is None or best_d > max_distance_m:
             raise LookupError(
-                f"no node within {max_distance_m:.0f} m of ({point.lng}, {point.lat})"
+                f"no node within {max_distance_m:.0f} m of ({point_lng}, {point_lat})"
             )
-        return best_id
+        return best_node

@@ -17,11 +17,13 @@ The contract that matters here:
 """
 
 from roadpulse_routing.engine import (
+    EdgePenaltyLookup,
+    ReachableNode,
     Route,
-    RouteRequest,
-    RouteResponse,
     RoutingEngine,
+    StaticPenalty,
     Step,
+    ZeroPenalty,
 )
 from roadpulse_routing.graph import Edge, Graph, Node
 from roadpulse_routing.profiles import (
@@ -35,15 +37,17 @@ from roadpulse_routing.profiles import (
 
 __all__ = [
     "Edge",
+    "EdgePenaltyLookup",
     "Graph",
     "Node",
     "PROFILES",
     "Profile",
+    "ReachableNode",
     "Route",
-    "RouteRequest",
-    "RouteResponse",
     "RoutingEngine",
+    "StaticPenalty",
     "Step",
+    "ZeroPenalty",
     "bicycle_vn",
     "car_vn",
     "motorbike_vn",
