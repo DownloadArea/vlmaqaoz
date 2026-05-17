@@ -30,6 +30,15 @@ jobs:
       - name: Sync workspace
         run: uv sync --all-extras
 
+      - name: Install local packages (editable)
+        run: |
+          uv pip install -e packages/python/roadpulse_core \
+                         -e packages/python/roadpulse_telemetry \
+                         -e packages/python/roadpulse_privacy \
+                         -e packages/python/roadpulse_features \
+                         -e packages/python/roadpulse_routing \
+                         -e packages/python/roadpulse_ml
+
       - name: Lint (ruff)
         run: uv run ruff check .
 
