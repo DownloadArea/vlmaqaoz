@@ -7,10 +7,9 @@ dependency injection, the seeded HCMC graph and the ML models in one go.
 from __future__ import annotations
 
 import pytest
-from fastapi.testclient import TestClient
-
 from app.main import app
 from app.state import reset_app_state
+from fastapi.testclient import TestClient
 
 
 @pytest.fixture(scope="module")

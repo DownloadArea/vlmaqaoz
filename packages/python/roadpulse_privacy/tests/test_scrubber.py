@@ -5,7 +5,6 @@ from __future__ import annotations
 import logging
 
 import pytest
-
 from roadpulse_privacy.scrubber import (
     REDACTED,
     PIIScrubber,

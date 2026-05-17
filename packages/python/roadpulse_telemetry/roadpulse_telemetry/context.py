@@ -10,8 +10,8 @@ from __future__ import annotations
 import os
 import secrets
 import time
+from collections.abc import Mapping
 from contextvars import ContextVar
-from typing import Mapping
 
 _TRACE_ID: ContextVar[str | None] = ContextVar("roadpulse_trace_id", default=None)
 _ORG_ID: ContextVar[str | None] = ContextVar("roadpulse_org_id", default=None)

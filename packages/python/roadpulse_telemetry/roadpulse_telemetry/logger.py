@@ -12,9 +12,8 @@ import sys
 from typing import Any
 
 import structlog
-from structlog.types import EventDict, Processor
-
 from roadpulse_privacy.scrubber import PIIScrubber
+from structlog.types import EventDict, Processor
 
 from roadpulse_telemetry.context import (
     _ORG_ID,

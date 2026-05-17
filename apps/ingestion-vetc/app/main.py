@@ -7,8 +7,8 @@ drop and forwards onto Redpanda. Either way every batch is k-anon-checked.
 from __future__ import annotations
 
 import csv
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable
 
 from roadpulse_privacy.guard import KAnonGuard
 from roadpulse_telemetry.logger import get_logger

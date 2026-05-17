@@ -14,7 +14,6 @@ flooded corridor; ``eco`` should additionally prefer the lower-class roads.
 from __future__ import annotations
 
 from roadpulse_core.types import RouteMode
-
 from roadpulse_routing.engine import RoutingEngine, StaticPenalty
 from roadpulse_routing.graph import Edge, Graph, Node
 

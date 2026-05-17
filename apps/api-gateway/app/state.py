@@ -12,11 +12,9 @@ import random
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Iterable
 
-from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from cryptography.hazmat.primitives import serialization
-
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from roadpulse_core.types import LatLon, Org
 from roadpulse_features.store import InMemoryFeatureStore
 from roadpulse_ml.eco import EcoModel
@@ -25,7 +23,6 @@ from roadpulse_ml.flood import FloodDetector, FloodObservation
 from roadpulse_privacy.guard import KAnonGuard
 from roadpulse_routing.engine import RoutingEngine, StaticPenalty
 from roadpulse_routing.graph import Edge, Graph, Node
-
 
 # --- Seed loader ---------------------------------------------------------------------
 

@@ -24,17 +24,16 @@ import pickle
 import zlib
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 import numpy as np
 from pydantic import BaseModel, ConfigDict, Field
+from roadpulse_core.types import EtaConfidence
 from sklearn.ensemble import (
     GradientBoostingRegressor,
     HistGradientBoostingRegressor,
 )
-
-from roadpulse_core.types import EtaConfidence
 
 ETA_FEATURES: tuple[str, ...] = (
     "distance_m",
@@ -153,7 +152,7 @@ class EtaModel:
         self._models.p10.fit(matrix, targets)
         self._models.p90.fit(matrix, targets)
         self._fitted = True
-        self._trained_at = datetime.now(timezone.utc)
+        self._trained_at = datetime.now(UTC)
         self._version = (
             f"{self.version_prefix}-{matrix.shape[0]}-{self._trained_at:%Y%m%d%H%M}"
         )

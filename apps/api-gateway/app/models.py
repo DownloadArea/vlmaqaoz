@@ -10,7 +10,6 @@ from datetime import datetime
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
-
 from roadpulse_core.types import EtaConfidence, LatLon, RouteMode, TimeOfDay
 
 
@@ -66,7 +65,7 @@ class RouteResponse(BaseModel):
     request_id: str
     generated_at: datetime
     variants: list[RouteVariant]
-    flood_overlay: list["FloodOverlayPoint"]
+    flood_overlay: list[FloodOverlayPoint]
     weather_note: str | None = None
 
 

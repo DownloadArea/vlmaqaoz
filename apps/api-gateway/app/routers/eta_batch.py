@@ -2,11 +2,10 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
-
 from roadpulse_core.types import Org
 from roadpulse_ml.eta import EtaModel, ETARecord
 from roadpulse_routing.engine import RoutingEngine
@@ -39,7 +38,7 @@ def post_eta_batch(
     state: Annotated[AppState, Depends(state_dep)],
     _org: Annotated[Org, Depends(org_from_api_key)],
 ) -> BatchEtaResponse:
-    depart_at = body.depart_at or datetime.now(timezone.utc)
+    depart_at = body.depart_at or datetime.now(UTC)
     hour_of_week = (depart_at.weekday() * 24 + depart_at.hour) % 168
     is_weekend = 1 if depart_at.weekday() >= 5 else 0
     is_rush = 1 if depart_at.hour in {7, 8, 9, 17, 18, 19} else 0
@@ -123,7 +122,7 @@ def post_eta_batch(
     }
     return BatchEtaResponse(
         batch_id=body.batch_id,
-        generated_at=datetime.now(timezone.utc),
+        generated_at=datetime.now(UTC),
         predictions=predictions,
         summary=summary,
     )

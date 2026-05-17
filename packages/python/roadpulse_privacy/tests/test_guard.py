@@ -2,10 +2,9 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import pytest
-
 from roadpulse_privacy.audit import in_memory_sink
 from roadpulse_privacy.guard import KAnonGuard
 
@@ -22,7 +21,7 @@ def test_guard_allows_buckets_at_or_above_min_k() -> None:
 def test_guard_drops_thin_buckets_and_records_violations() -> None:
     sink = in_memory_sink()
     guard = KAnonGuard(min_k=50, time_window_s=300, sink=sink, source="vetc.hex.5min")
-    at = datetime(2025, 9, 1, tzinfo=timezone.utc)
+    at = datetime(2025, 9, 1, tzinfo=UTC)
     decision = guard.check(bucket="hex_b", observed_k=12, at=at)
     assert not decision.allowed
     assert decision.observed_k == 12

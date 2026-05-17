@@ -2,11 +2,10 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
-
 from roadpulse_core.types import Org
 
 from app.dependencies import org_from_api_key, state_dep
@@ -40,7 +39,6 @@ def post_site_selection(
         )[hex_id]
         flow = float(features.get("flow_in") or 0) + float(features.get("flow_out") or 0)
         flood_penalty = float(entry["score"])  # type: ignore[arg-type]
-        median_visit_min = 4.5 if body.audience == "retail" else 9.0
         raw_rows.append((hex_id, centroid, flow, flood_penalty))
         total_flow += flow
 
@@ -64,7 +62,7 @@ def post_site_selection(
             )
         return SiteSelectionResponse(
             bbox=body.bbox,
-            generated_at=datetime.now(timezone.utc),
+            generated_at=datetime.now(UTC),
             top_cells=cells,
         )
     audience_bonus = {"retail": 1.0, "logistics": 0.85, "hospitality": 1.15}[body.audience]
@@ -84,6 +82,6 @@ def post_site_selection(
     cells.sort(key=lambda c: c.score, reverse=True)
     return SiteSelectionResponse(
         bbox=body.bbox,
-        generated_at=datetime.now(timezone.utc),
+        generated_at=datetime.now(UTC),
         top_cells=cells[:40],
     )

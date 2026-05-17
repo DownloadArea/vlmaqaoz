@@ -11,12 +11,11 @@ from __future__ import annotations
 import base64
 import hashlib
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import PlainTextResponse
-
 from roadpulse_core.types import Org
 
 from app.dependencies import org_from_api_key, state_dep
@@ -52,7 +51,7 @@ def get_trigger_feed(
             continue
         if monitored_hexes and hex_id not in monitored_hexes:
             continue
-        captured_at = datetime.now(timezone.utc)
+        captured_at = datetime.now(UTC)
         payload = {
             "policy_id": policy_id,
             "hex_id": hex_id,
@@ -77,7 +76,7 @@ def get_trigger_feed(
         )
     return TriggerFeedResponse(
         policy_id=policy_id,
-        generated_at=datetime.now(timezone.utc),
+        generated_at=datetime.now(UTC),
         events=events,
     )
 

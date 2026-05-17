@@ -40,13 +40,13 @@ class EdgePenaltyLookup(Protocol):
 class ZeroPenalty:
     """No-op penalty lookup used in tests and offline backtests."""
 
-    def congestion(self, edge: Edge) -> float:  # noqa: ARG002
+    def congestion(self, edge: Edge) -> float:
         return 0.0
 
-    def flood(self, edge: Edge) -> float:  # noqa: ARG002
+    def flood(self, edge: Edge) -> float:
         return 0.0
 
-    def eco(self, edge: Edge) -> float:  # noqa: ARG002
+    def eco(self, edge: Edge) -> float:
         return 0.0
 
 

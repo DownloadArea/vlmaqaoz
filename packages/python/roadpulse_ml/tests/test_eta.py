@@ -5,7 +5,6 @@ from __future__ import annotations
 import random
 
 import pytest
-
 from roadpulse_core.types import EtaConfidence
 from roadpulse_ml.eta import ETA_FEATURES, EtaModel, ETARecord
 

@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import random
 
+from roadpulse_core.types import RouteMode
 from roadpulse_ml.eco import EcoModel
 from roadpulse_ml.flood import FloodDetector, FloodObservation
-from roadpulse_core.types import RouteMode
 
 
 def _historical(n: int = 400, seed: int = 11) -> list[FloodObservation]:

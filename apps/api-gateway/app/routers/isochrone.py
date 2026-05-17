@@ -3,12 +3,10 @@
 from __future__ import annotations
 
 import math
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
-
-from roadpulse_core.geo import haversine_m
 from roadpulse_core.types import LatLon, Org
 from roadpulse_routing.engine import RoutingEngine
 
@@ -64,7 +62,7 @@ def post_isochrone(
         )
     return IsochroneResponse(
         origin=body.origin,
-        generated_at=datetime.now(timezone.utc),
+        generated_at=datetime.now(UTC),
         rings=rings,
     )
 

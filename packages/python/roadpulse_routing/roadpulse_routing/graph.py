@@ -138,8 +138,8 @@ class Graph:
         ``routing-engine`` app which depends on this package.
         """
         if lat is None:
-            point_lng = float(getattr(lng_or_point, "lng"))
-            point_lat = float(getattr(lng_or_point, "lat"))
+            point_lng = float(lng_or_point.lng)
+            point_lat = float(lng_or_point.lat)
         else:
             point_lng = float(lng_or_point)
             point_lat = float(lat)

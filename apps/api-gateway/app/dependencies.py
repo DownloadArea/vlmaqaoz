@@ -9,7 +9,6 @@ from __future__ import annotations
 from typing import Annotated
 
 from fastapi import Depends, Header, HTTPException, status
-
 from roadpulse_core.types import Org
 from roadpulse_features.store import InMemoryFeatureStore
 from roadpulse_ml.eco import EcoModel
@@ -55,7 +54,7 @@ def kanon_guard_dep(state: Annotated[AppState, Depends(state_dep)]) -> KAnonGuar
     return state.kanon_guard
 
 
-def logger_dep():  # noqa: ANN201 — structlog has no public type
+def logger_dep():
     return get_logger()
 
 

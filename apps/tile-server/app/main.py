@@ -4,11 +4,11 @@ both)."""
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
-import json
 
 app = FastAPI(title="RoadPulse Tile Server", version="0.1.0")
 

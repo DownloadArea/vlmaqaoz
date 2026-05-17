@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from typing import AsyncIterator
 
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
-
 from roadpulse_ml.flood import FloodDetector, FloodObservation
 from roadpulse_telemetry.logger import get_logger
 

@@ -2,19 +2,17 @@
 
 from __future__ import annotations
 
+import json
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import AsyncIterator
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
-
 from roadpulse_core.types import RouteMode
 from roadpulse_routing.engine import RoutingEngine, StaticPenalty
 from roadpulse_routing.graph import Edge, Graph, Node
 from roadpulse_telemetry.logger import get_logger
-
-import json
 
 
 class LatLon(BaseModel):

@@ -7,13 +7,12 @@ metadata. Business logic lives under ``app.routers.*``.
 from __future__ import annotations
 
 import time
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from typing import AsyncIterator
 
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-
 from roadpulse_telemetry.context import bind_request_context
 from roadpulse_telemetry.logger import configure_logging, get_logger
 
@@ -68,7 +67,7 @@ app = FastAPI(
 
 
 @app.middleware("http")
-async def trace_middleware(request: Request, call_next):  # noqa: ANN001
+async def trace_middleware(request: Request, call_next):
     started = time.perf_counter()
     trace_id = bind_request_context(headers=request.headers)
     response: Response = await call_next(request)

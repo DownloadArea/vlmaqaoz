@@ -2,11 +2,10 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, Query
-
 from roadpulse_core.types import LatLon, Org
 
 from app.dependencies import org_from_api_key, state_dep
@@ -61,7 +60,7 @@ def get_flood_risk(
         )
     return FloodRiskResponse(
         horizon=horizon,
-        generated_at=datetime.now(timezone.utc),
+        generated_at=datetime.now(UTC),
         hexes=rows,
     )
 

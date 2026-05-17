@@ -36,11 +36,11 @@ from roadpulse_routing.profiles import (
 )
 
 __all__ = [
+    "PROFILES",
     "Edge",
     "EdgePenaltyLookup",
     "Graph",
     "Node",
-    "PROFILES",
     "Profile",
     "ReachableNode",
     "Route",

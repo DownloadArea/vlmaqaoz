@@ -10,7 +10,7 @@ time-window. Failing buckets are dropped and the violation is forwarded to a
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 from roadpulse_privacy.audit import KAnonViolation, ViolationSink, in_memory_sink
 
@@ -67,7 +67,7 @@ class KAnonGuard:
         """Return a :class:`GuardDecision` and record any violation."""
         if observed_k >= self.min_k:
             return GuardDecision(allowed=True, observed_k=observed_k)
-        now = at or datetime.now(timezone.utc)
+        now = at or datetime.now(UTC)
         violation = KAnonViolation(
             source=self.source,
             bucket=bucket,

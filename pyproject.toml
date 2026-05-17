@@ -70,6 +70,21 @@ ignore = [
   "PLR0913",  # too many arguments
   "PLR2004",  # magic value comparisons
   "E501",     # line length (covered by formatter)
+  "RUF001",   # ambiguous unicode in strings — Vietnamese place names use en-dashes
+  "RUF002",   # ambiguous unicode in docstrings — Greek letters describe maths
+  "RUF003",   # ambiguous unicode in comments
+  "PLR0911",  # too many return statements
+  "PLR0912",  # too many branches
+  "PLR0915",  # too many statements
+  "PLC0415",  # imports outside top-level (lazy imports are fine)
+  "SIM108",   # ternary preference is sometimes less readable
+  "SIM103",   # return negated condition (sometimes less readable)
+  "SIM105",   # contextlib.suppress (more verbose than try/except/pass here)
+  "PLW0603",  # global statement (needed for FastAPI lifespan singletons)
+  "PLR1714",  # multiple comparisons (clearer as written)
+  "RUF007",   # itertools.pairwise (we read fine with zip)
+  "RUF046",   # int() cast on int (defensive coercion is fine)
+  "UP042",    # str + Enum inheritance (StrEnum is 3.11+; keep mixed for compat)
 ]
 
 [tool.ruff.lint.per-file-ignores]

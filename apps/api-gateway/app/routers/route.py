@@ -8,15 +8,13 @@ app can render the picker.
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
-
 from roadpulse_core.types import LatLon, Org, RouteMode
 from roadpulse_ml.eco import EcoModel
 from roadpulse_ml.eta import EtaModel, ETARecord
-from roadpulse_ml.flood import FloodObservation
 from roadpulse_routing.engine import RoutingEngine
 from roadpulse_telemetry.context import current_trace_id, new_trace_id
 from roadpulse_telemetry.logger import get_logger
@@ -78,7 +76,7 @@ def post_route(
             detail=str(exc),
         ) from exc
 
-    depart_at = body.depart_at or datetime.now(timezone.utc)
+    depart_at = body.depart_at or datetime.now(UTC)
     hour_of_week = (depart_at.weekday() * 24 + depart_at.hour) % 168
     is_weekend = 1 if depart_at.weekday() >= 5 else 0
     is_rush = 1 if depart_at.hour in {7, 8, 9, 17, 18, 19} else 0
@@ -158,14 +156,14 @@ def post_route(
     )
     return RouteResponse(
         request_id=request_id,
-        generated_at=datetime.now(timezone.utc),
+        generated_at=datetime.now(UTC),
         variants=variants,
         flood_overlay=overlay,
         weather_note=weather_note,
     )
 
 
-def _flatten_steps(variant) -> list[RouteStep]:  # noqa: ANN001 — internal type
+def _flatten_steps(variant) -> list[RouteStep]:
     steps: list[RouteStep] = []
     for step in variant.steps:
         steps.append(

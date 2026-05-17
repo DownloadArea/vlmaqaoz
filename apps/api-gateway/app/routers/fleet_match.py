@@ -7,11 +7,10 @@ estimated using the routing engine + flood penalty.
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
-
 from roadpulse_core.geo import haversine_m
 from roadpulse_core.types import LatLon, Org
 from roadpulse_routing.engine import RoutingEngine
@@ -76,6 +75,6 @@ def post_fleet_match(
     candidates.sort(key=lambda c: (c.pickup_eta_min, c.quote_vnd))
     return FleetMatchResponse(
         request_id=request_id,
-        generated_at=datetime.now(timezone.utc),
+        generated_at=datetime.now(UTC),
         candidates=candidates[:10],
     )
