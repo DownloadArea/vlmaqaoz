@@ -166,9 +166,7 @@ class FloodDetector:
         )
 
     @staticmethod
-    def _fuse(
-        anomaly: np.ndarray, prior: np.ndarray, precip: np.ndarray
-    ) -> np.ndarray:
+    def _fuse(anomaly: np.ndarray, prior: np.ndarray, precip: np.ndarray) -> np.ndarray:
         # Bayes: p(flood|x) = p(x|flood)·p(flood) / [p(x|flood)·p(flood) + p(x|¬flood)·(1-p(flood))]
         likelihood = anomaly * (0.6 + 0.4 * np.tanh(precip / 12.0))
         baseline = 1.0 - likelihood
@@ -179,9 +177,7 @@ class FloodDetector:
         return out
 
     @staticmethod
-    def _confidence(
-        anomaly: np.ndarray, prior: np.ndarray, crowd: np.ndarray
-    ) -> np.ndarray:
+    def _confidence(anomaly: np.ndarray, prior: np.ndarray, crowd: np.ndarray) -> np.ndarray:
         # Confidence is highest when SAR agrees and we have multiple crowd reports.
         agreement = 1.0 - np.abs(anomaly - prior)
         crowd_bonus = np.clip(crowd / 10.0, 0.0, 0.3)

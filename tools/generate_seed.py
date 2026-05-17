@@ -203,8 +203,18 @@ def build_flood_markers() -> dict[str, dict]:
     """Empirical Wet-season flood hexes — derived from VECC + Department of
     Transportation Statistical Yearbook 2023."""
     return {
-        "hex_22": {"score": 0.82, "note": "Hai Bà Trưng – Saigon River backflow", "lat": 10.78, "lng": 106.70},
-        "hex_23": {"score": 0.74, "note": "Nguyễn Hữu Cảnh – flat slope drainage", "lat": 10.77, "lng": 106.71},
+        "hex_22": {
+            "score": 0.82,
+            "note": "Hai Bà Trưng – Saigon River backflow",
+            "lat": 10.78,
+            "lng": 106.70,
+        },
+        "hex_23": {
+            "score": 0.74,
+            "note": "Nguyễn Hữu Cảnh – flat slope drainage",
+            "lat": 10.77,
+            "lng": 106.71,
+        },
         "hex_32": {"score": 0.66, "note": "District 4 canal overflow", "lat": 10.76, "lng": 106.71},
         "hex_33": {"score": 0.55, "note": "Khánh Hội ferry road", "lat": 10.75, "lng": 106.71},
         "hex_12": {"score": 0.45, "note": "Phú Nhuận pinch point", "lat": 10.79, "lng": 106.68},

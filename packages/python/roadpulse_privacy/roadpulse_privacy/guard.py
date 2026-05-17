@@ -89,7 +89,9 @@ class KAnonGuard:
         at: datetime | None = None,
     ) -> list[str]:
         """Filter ``[(bucket, observed_k), …]``, returning only buckets that pass."""
-        return [bucket for bucket, k in items if self.check(bucket=bucket, observed_k=k, at=at).allowed]
+        return [
+            bucket for bucket, k in items if self.check(bucket=bucket, observed_k=k, at=at).allowed
+        ]
 
     @property
     def violations(self) -> list[KAnonViolation]:

@@ -44,8 +44,7 @@ class BoundingBox:
 
     def contains(self, point: Coordinate) -> bool:
         return (
-            self.min_lng <= point.lng <= self.max_lng
-            and self.min_lat <= point.lat <= self.max_lat
+            self.min_lng <= point.lng <= self.max_lng and self.min_lat <= point.lat <= self.max_lat
         )
 
 

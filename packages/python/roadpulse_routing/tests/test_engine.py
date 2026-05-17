@@ -29,20 +29,75 @@ def _toy_graph() -> Graph:
 
     common = {"hex_id": ""}
     g.add_edge(
-        Edge(src=1, dst=2, distance_m=1_000, free_flow_speed_kmh=45, road_class="primary", tags=dict(common))
+        Edge(
+            src=1,
+            dst=2,
+            distance_m=1_000,
+            free_flow_speed_kmh=45,
+            road_class="primary",
+            tags=dict(common),
+        )
     )
     g.add_edge(
-        Edge(src=2, dst=3, distance_m=1_000, free_flow_speed_kmh=45, road_class="primary", tags=dict(common))
+        Edge(
+            src=2,
+            dst=3,
+            distance_m=1_000,
+            free_flow_speed_kmh=45,
+            road_class="primary",
+            tags=dict(common),
+        )
     )
     g.add_edge(
-        Edge(src=4, dst=5, distance_m=1_000, free_flow_speed_kmh=50, road_class="trunk", tags={"hex_id": "hex_flood"})
+        Edge(
+            src=4,
+            dst=5,
+            distance_m=1_000,
+            free_flow_speed_kmh=50,
+            road_class="trunk",
+            tags={"hex_id": "hex_flood"},
+        )
     )
     g.add_edge(
-        Edge(src=5, dst=6, distance_m=1_000, free_flow_speed_kmh=50, road_class="trunk", tags={"hex_id": "hex_flood"})
+        Edge(
+            src=5,
+            dst=6,
+            distance_m=1_000,
+            free_flow_speed_kmh=50,
+            road_class="trunk",
+            tags={"hex_id": "hex_flood"},
+        )
     )
-    g.add_edge(Edge(src=1, dst=4, distance_m=500, free_flow_speed_kmh=25, road_class="residential", tags=dict(common)))
-    g.add_edge(Edge(src=2, dst=5, distance_m=500, free_flow_speed_kmh=25, road_class="residential", tags=dict(common)))
-    g.add_edge(Edge(src=3, dst=6, distance_m=500, free_flow_speed_kmh=25, road_class="residential", tags=dict(common)))
+    g.add_edge(
+        Edge(
+            src=1,
+            dst=4,
+            distance_m=500,
+            free_flow_speed_kmh=25,
+            road_class="residential",
+            tags=dict(common),
+        )
+    )
+    g.add_edge(
+        Edge(
+            src=2,
+            dst=5,
+            distance_m=500,
+            free_flow_speed_kmh=25,
+            road_class="residential",
+            tags=dict(common),
+        )
+    )
+    g.add_edge(
+        Edge(
+            src=3,
+            dst=6,
+            distance_m=500,
+            free_flow_speed_kmh=25,
+            road_class="residential",
+            tags=dict(common),
+        )
+    )
     return g
 
 

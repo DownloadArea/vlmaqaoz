@@ -89,13 +89,25 @@ HEX_SPEED_5MIN = FeatureView(
     entity="hex_id",
     ttl_seconds=24 * 3600,
     features=[
-        FeatureSpec(name="avg_speed_kmh", dtype="float32", description="Average speed of vehicles in the hex over the 5-minute bucket"),
+        FeatureSpec(
+            name="avg_speed_kmh",
+            dtype="float32",
+            description="Average speed of vehicles in the hex over the 5-minute bucket",
+        ),
         FeatureSpec(name="speed_p10", dtype="float32", description="10th percentile speed"),
         FeatureSpec(name="speed_p50", dtype="float32", description="50th percentile speed"),
         FeatureSpec(name="speed_p90", dtype="float32", description="90th percentile speed"),
-        FeatureSpec(name="flow_in", dtype="int32", description="Vehicles entering the hex during the bucket"),
-        FeatureSpec(name="flow_out", dtype="int32", description="Vehicles leaving the hex during the bucket"),
-        FeatureSpec(name="vehicle_count", dtype="int32", description="Unique vehicles seen (k-anonymity ≥ 50)"),
+        FeatureSpec(
+            name="flow_in", dtype="int32", description="Vehicles entering the hex during the bucket"
+        ),
+        FeatureSpec(
+            name="flow_out", dtype="int32", description="Vehicles leaving the hex during the bucket"
+        ),
+        FeatureSpec(
+            name="vehicle_count",
+            dtype="int32",
+            description="Unique vehicles seen (k-anonymity ≥ 50)",
+        ),
     ],
 )
 

@@ -50,7 +50,9 @@ class Settings(BaseSettings):
     )
 
     # Seed data location. Defaults to ``data/seed`` in the repo.
-    seed_data_dir: Path = Field(default_factory=lambda: Path(__file__).resolve().parents[3] / "data" / "seed")
+    seed_data_dir: Path = Field(
+        default_factory=lambda: Path(__file__).resolve().parents[3] / "data" / "seed"
+    )
 
     # Privacy. The k-anon threshold from PDPD 13/2023/NĐ-CP MVP guidance.
     k_anon_threshold: int = 50

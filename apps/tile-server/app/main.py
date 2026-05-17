@@ -33,13 +33,15 @@ def flood_overlay() -> JSONResponse:
             lng = float(payload.get("lng"))
         except (TypeError, ValueError):
             continue
-        features.append({
-            "type": "Feature",
-            "geometry": {"type": "Point", "coordinates": [lng, lat]},
-            "properties": {
-                "hex_id": hex_id,
-                "score": float(payload.get("score", 0.0)),
-                "note": payload.get("note", ""),
-            },
-        })
+        features.append(
+            {
+                "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": [lng, lat]},
+                "properties": {
+                    "hex_id": hex_id,
+                    "score": float(payload.get("score", 0.0)),
+                    "note": payload.get("note", ""),
+                },
+            }
+        )
     return JSONResponse({"type": "FeatureCollection", "features": features})

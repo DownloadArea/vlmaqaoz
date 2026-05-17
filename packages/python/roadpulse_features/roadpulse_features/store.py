@@ -44,8 +44,7 @@ class InMemoryFeatureStore:
         with self._lock:
             view_data = self._tables.get(view, {})
             return {
-                key: {feat: view_data.get(key, {}).get(feat) for feat in wanted}
-                for key in keys
+                key: {feat: view_data.get(key, {}).get(feat) for feat in wanted} for key in keys
             }
 
     def keys(self, view: str) -> list[str]:

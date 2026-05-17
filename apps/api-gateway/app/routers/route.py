@@ -84,9 +84,7 @@ def post_route(
     variants: list[RouteVariant] = []
     for variant in candidates:
         # Use the average flood score of the path as the ETA flood feature.
-        avg_speed = (
-            (variant.distance_m / variant.duration_s) * 3.6 if variant.duration_s > 0 else 0
-        )
+        avg_speed = (variant.distance_m / variant.duration_s) * 3.6 if variant.duration_s > 0 else 0
         eta_record = ETARecord(
             distance_m=variant.distance_m,
             free_flow_seconds=variant.free_flow_seconds,

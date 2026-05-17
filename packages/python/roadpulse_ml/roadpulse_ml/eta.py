@@ -153,9 +153,7 @@ class EtaModel:
         self._models.p90.fit(matrix, targets)
         self._fitted = True
         self._trained_at = datetime.now(UTC)
-        self._version = (
-            f"{self.version_prefix}-{matrix.shape[0]}-{self._trained_at:%Y%m%d%H%M}"
-        )
+        self._version = f"{self.version_prefix}-{matrix.shape[0]}-{self._trained_at:%Y%m%d%H%M}"
 
     # --- inference --------------------------------------------------------------------
 

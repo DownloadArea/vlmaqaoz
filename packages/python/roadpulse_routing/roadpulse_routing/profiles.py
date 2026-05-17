@@ -46,10 +46,15 @@ class Profile:
         # Truck-specific tags
         if "hgv" in tags and tags["hgv"] in {"no", "destination"} and self.mode is RouteMode.TRUCK:
             return False
-        if "motor_vehicle" in tags and tags["motor_vehicle"] == "no" and self.mode in {
-            RouteMode.CAR,
-            RouteMode.TRUCK,
-        }:
+        if (
+            "motor_vehicle" in tags
+            and tags["motor_vehicle"] == "no"
+            and self.mode
+            in {
+                RouteMode.CAR,
+                RouteMode.TRUCK,
+            }
+        ):
             return False
         return True
 

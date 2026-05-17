@@ -62,13 +62,13 @@ def pubkey(policy_id: str) -> dict[str, str]:
 
 
 @app.post("/policies/{policy_id}/emit", response_model=TriggerEvent)
-def emit(policy_id: str, hex_id: str, score: float, threshold: float, payout_vnd: int) -> TriggerEvent:
+def emit(
+    policy_id: str, hex_id: str, score: float, threshold: float, payout_vnd: int
+) -> TriggerEvent:
     if _ed25519_signer is None:
         raise HTTPException(503, "signer not initialised")
     ts_ms = int(time.time() * 1_000)
-    event_id = hashlib.blake2b(
-        f"{policy_id}|{hex_id}|{ts_ms}".encode(), digest_size=12
-    ).hexdigest()
+    event_id = hashlib.blake2b(f"{policy_id}|{hex_id}|{ts_ms}".encode(), digest_size=12).hexdigest()
     payload = f"{policy_id}|{event_id}|{hex_id}|{score:.4f}|{ts_ms}".encode()
     sig = base64.b64encode(_ed25519_signer.sign(payload)).decode("ascii")
     return TriggerEvent(

@@ -29,7 +29,9 @@ def post_isochrone(
     _org: Annotated[Org, Depends(org_from_api_key)],
 ) -> IsochroneResponse:
     origin_node = state.nearest_node(body.origin)
-    reachable = engine.reachable_within(origin_node.id, max_seconds=max(body.minutes) * 60, mode=body.mode)
+    reachable = engine.reachable_within(
+        origin_node.id, max_seconds=max(body.minutes) * 60, mode=body.mode
+    )
 
     rings: list[IsochroneRing] = []
     for minute in sorted(body.minutes):
@@ -41,7 +43,9 @@ def post_isochrone(
                 IsochroneRing(minutes=minute, area_km2=0.0, population_reached=0, polygon=polygon)
             )
             continue
-        polygon = _convex_hull([(state.graph.nodes[n.node_id].lng, state.graph.nodes[n.node_id].lat) for n in nodes])
+        polygon = _convex_hull(
+            [(state.graph.nodes[n.node_id].lng, state.graph.nodes[n.node_id].lat) for n in nodes]
+        )
         area_km2 = _polygon_area_km2(polygon)
         # Population estimate: count distinct hexes visited × mean population per hex.
         hex_ids: set[str] = set()

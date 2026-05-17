@@ -81,9 +81,7 @@ def post_eta_batch(
             eta_sum += ff * 1.4
             flood_sum += 0.05
             continue
-        avg_speed = (
-            (variant.distance_m / variant.duration_s) * 3.6 if variant.duration_s > 0 else 0
-        )
+        avg_speed = (variant.distance_m / variant.duration_s) * 3.6 if variant.duration_s > 0 else 0
         record = ETARecord(
             distance_m=variant.distance_m,
             free_flow_seconds=variant.free_flow_seconds,

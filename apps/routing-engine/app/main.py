@@ -59,7 +59,9 @@ def _load_graph() -> tuple[Graph, dict[str, float]]:
             ),
             bidirectional=False,
         )
-    flood_by_hex = {hid: float(info.get("score", 0.0)) for hid, info in floods.items() if isinstance(info, dict)}
+    flood_by_hex = {
+        hid: float(info.get("score", 0.0)) for hid, info in floods.items() if isinstance(info, dict)
+    }
     return g, flood_by_hex
 
 

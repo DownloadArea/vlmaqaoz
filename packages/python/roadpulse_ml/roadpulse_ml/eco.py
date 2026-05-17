@@ -26,6 +26,7 @@ BASE_GCO2_PER_KM: dict[RouteMode, float] = {
     RouteMode.BICYCLE: 0.0,
 }
 
+
 # Speed-dependent multiplier (idling traffic and high-speed cruising both burn more).
 def _speed_multiplier(speed_kmh: float) -> float:
     if speed_kmh <= 0:

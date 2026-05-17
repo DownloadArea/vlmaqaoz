@@ -18,9 +18,7 @@ def _historical(n: int = 400, seed: int = 11) -> list[FloodObservation]:
             FloodObservation(
                 hex_id=f"hex_{i:04x}",
                 speed_drop_pct=rng.uniform(0.0, 0.2) if normal else rng.uniform(0.7, 0.95),
-                sar_water_prior=rng.uniform(0.01, 0.06)
-                if normal
-                else rng.uniform(0.7, 0.95),
+                sar_water_prior=rng.uniform(0.01, 0.06) if normal else rng.uniform(0.7, 0.95),
                 crowd_reports=0 if normal else rng.randint(1, 5),
                 precipitation_mm_h=rng.uniform(0, 4) if normal else rng.uniform(10, 30),
             )

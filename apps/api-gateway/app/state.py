@@ -129,8 +129,7 @@ def load_seed_bundle(seed_dir: Path) -> SeedBundle:
 def _fallback_seed() -> SeedBundle:
     """Tiny synthetic graph used when ``data/seed`` is missing (CI-only)."""
     nodes = [
-        Node(id=i, lng=106.700 + 0.005 * (i % 5), lat=10.770 + 0.005 * (i // 5))
-        for i in range(20)
+        Node(id=i, lng=106.700 + 0.005 * (i % 5), lat=10.770 + 0.005 * (i // 5)) for i in range(20)
     ]
     edges: list[Edge] = []
     for n in nodes:
@@ -171,14 +170,18 @@ class AppState:
 
     def __init__(self, seed_dir: Path | None = None) -> None:
         self._started_at = time.time()
-        self.seed = load_seed_bundle(seed_dir or Path(__file__).resolve().parents[3] / "data" / "seed")
+        self.seed = load_seed_bundle(
+            seed_dir or Path(__file__).resolve().parents[3] / "data" / "seed"
+        )
         self._graph = Graph()
         for node in self.seed.nodes:
             self._graph.add_node(node)
         for edge in self.seed.edges:
             self._graph.add_edge(edge)
 
-        flood_by_hex = {hid: float(payload["score"]) for hid, payload in self.seed.flood_hexes.items()}
+        flood_by_hex = {
+            hid: float(payload["score"]) for hid, payload in self.seed.flood_hexes.items()
+        }
         self.penalty = StaticPenalty(flood_by_hex=flood_by_hex)
         self.routing_engine = RoutingEngine(self._graph, self.penalty)
 

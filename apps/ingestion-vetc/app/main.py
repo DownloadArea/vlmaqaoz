@@ -35,7 +35,9 @@ def run(csv_path: Path, *, min_k: int = 50) -> dict[str, int]:
     accepted = 0
     rejected = 0
     for bucket in stream_buckets(csv_path):
-        decision = guard.check(bucket=str(bucket["hex_id"]), observed_k=int(bucket["vehicle_count"]))
+        decision = guard.check(
+            bucket=str(bucket["hex_id"]), observed_k=int(bucket["vehicle_count"])
+        )
         if decision.allowed:
             accepted += 1
         else:
