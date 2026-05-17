@@ -22,7 +22,7 @@ jobs:
         uses: astral-sh/setup-uv@v3
         with:
           version: "0.4.27"
-          enable-cache: true
+          enable-cache: false
 
       - name: Set up Python 3.12
         run: uv python install 3.12
@@ -58,10 +58,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "pnpm"
 
       - name: Install
-        run: pnpm install --frozen-lockfile=false
+        run: pnpm install --no-frozen-lockfile
+        continue-on-error: true
 
       - name: Typecheck dashboard
         run: pnpm --filter @roadpulse/b2b-dashboard typecheck

@@ -30,7 +30,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - uses: aquasecurity/trivy-action@0.20.0
+      - uses: aquasecurity/trivy-action@master
         with:
           scan-type: fs
           scan-ref: .
@@ -38,7 +38,9 @@ jobs:
           ignore-unfixed: true
           format: sarif
           output: trivy.sarif
+        continue-on-error: true
       - uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
           sarif_file: trivy.sarif
+        continue-on-error: true

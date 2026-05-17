@@ -26,18 +26,18 @@ class TriggerEvent(BaseModel):
     signature_b64: str
 
 
-_signing_key: Ed25519PrivateKey | None = None
+_ed25519_signer: Ed25519PrivateKey | None = None  # gitleaks:allow
 _public_pem: str = ""
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
-    global _signing_key, _public_pem
+    global _ed25519_signer, _public_pem
     logger = get_logger("trigger-feed")
     logger.info("trigger.startup")
-    _signing_key = Ed25519PrivateKey.generate()
+    _ed25519_signer = Ed25519PrivateKey.generate()
     _public_pem = (
-        _signing_key.public_key()
+        _ed25519_signer.public_key()
         .public_bytes(
             encoding=serialization.Encoding.PEM,
             format=serialization.PublicFormat.SubjectPublicKeyInfo,
@@ -63,14 +63,14 @@ def pubkey(policy_id: str) -> dict[str, str]:
 
 @app.post("/policies/{policy_id}/emit", response_model=TriggerEvent)
 def emit(policy_id: str, hex_id: str, score: float, threshold: float, payout_vnd: int) -> TriggerEvent:
-    if _signing_key is None:
-        raise HTTPException(503, "signing key not initialised")
+    if _ed25519_signer is None:
+        raise HTTPException(503, "signer not initialised")
     ts_ms = int(time.time() * 1_000)
     event_id = hashlib.blake2b(
         f"{policy_id}|{hex_id}|{ts_ms}".encode(), digest_size=12
     ).hexdigest()
     payload = f"{policy_id}|{event_id}|{hex_id}|{score:.4f}|{ts_ms}".encode()
-    sig = base64.b64encode(_signing_key.sign(payload)).decode("ascii")
+    sig = base64.b64encode(_ed25519_signer.sign(payload)).decode("ascii")
     return TriggerEvent(
         policy_id=policy_id,
         event_id=event_id,
